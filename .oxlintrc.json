@@ -15,6 +15,7 @@
     "typescript/no-extraneous-class": "off"
   },
   "env": {
-    "node": true
+    "node": true,
+    "browser": true
   }
 }

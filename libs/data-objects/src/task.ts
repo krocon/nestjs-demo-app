@@ -10,3 +10,9 @@ export interface Task {
   readonly title: string;
   readonly done: boolean;
 }
+
+/**
+ * Longest allowed title. It lives here, not in task.dto.ts, so the browser can
+ * import the value without pulling in the class-validator decorators.
+ */
+export const MAX_TITLE_LENGTH = 100;

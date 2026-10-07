@@ -1,0 +1,12 @@
+{
+  "/tasks": {
+    "target": "http://localhost:8080"
+  },
+  "/health": {
+    "target": "http://localhost:8080"
+  },
+  "/ws": {
+    "target": "http://localhost:8080",
+    "ws": true
+  }
+}

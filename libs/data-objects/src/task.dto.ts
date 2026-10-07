@@ -15,8 +15,7 @@ import {
   Matches,
   MaxLength,
 } from 'class-validator';
-
-export const MAX_TITLE_LENGTH = 100;
+import { MAX_TITLE_LENGTH } from './task.js';
 
 /** Body of POST /tasks. */
 export class CreateTaskRequest {

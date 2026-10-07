@@ -1,7 +1,7 @@
 {
   "name": "nestjs-demo-app",
   "version": "1.0.0",
-  "description": "Small NestJS task API \u2013 the reference example for a series of one-minute videos",
+  "description": "Monorepo: NestJS backend, Angular frontend and shared data objects – the reference example for a series of one-minute videos",
   "private": true,
   "license": "MIT",
   "type": "module",
@@ -10,11 +10,11 @@
     "apps/*"
   ],
   "engines": {
-    "node": ">=22.12"
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
   },
   "scripts": {
-    "build": "npm run build -w libs/data-objects && npm run build -w apps/nestjs",
-    "start:dev": "npm run start:dev -w apps/nestjs",
+    "build": "npm run build -w libs/data-objects && npm run build -w apps/nestjs -w apps/frontend",
+    "start:dev": "npm run build -w libs/data-objects && concurrently --names data-objects,nestjs,frontend --prefix-colors blue,red,green \"npm run build:watch -w libs/data-objects\" \"npm run start:dev -w apps/nestjs\" \"npm start -w apps/frontend\"",
     "start:prod": "npm run start:prod -w apps/nestjs",
     "test": "npm run build -w libs/data-objects && npm run test --workspaces --if-present",
     "typecheck": "npm run build -w libs/data-objects && npm run typecheck --workspaces --if-present",
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.20.5",
+    "concurrently": "^10.0.5",
     "oxlint": "^1.87.0",
     "prettier": "^3.9.9",
     "typescript": "~6.0.3",

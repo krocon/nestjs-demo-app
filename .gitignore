@@ -1,6 +1,7 @@
-# Dependencies & build output
+# Dependencies & build output (in every workspace)
 node_modules/
 dist/
+.angular/
 coverage/
 *.tsbuildinfo
 
