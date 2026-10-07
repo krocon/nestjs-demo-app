@@ -15,14 +15,13 @@ import {
 } from '@nestjs/websockets';
 import type { Subscription } from 'rxjs';
 import { WebSocket } from 'ws';
-import { TaskEvents } from '../tasks/task-event.js';
+import { MAX_TITLE_LENGTH, TaskEvents } from '@nestjs-demo/data-objects';
 import { TaskEventBus } from '../tasks/task-event-bus.js';
 import {
   TASK_REPOSITORY,
   type TaskRepository,
 } from '../tasks/task.repository.js';
 import { CREATE_TASK_MESSAGE } from '../common/websockets.js';
-import { MAX_TITLE_LENGTH } from '../tasks/task.dto.js';
 
 /**
  * Drop strategy for slow clients: if more than 1 MiB is still waiting in a

@@ -2,7 +2,7 @@ import type { NestExpressApplication } from '@nestjs/platform-express';
 import type { AddressInfo } from 'node:net';
 import { WebSocket } from 'ws';
 import { TaskEventBus } from '../../src/tasks/task-event-bus.js';
-import type { TaskEvent } from '../../src/tasks/task-event.js';
+import { assertNever, type TaskEvent } from '@nestjs-demo/data-objects';
 import { createTestApp } from '../test-app.js';
 
 /** Every wait in this file gives up after this many milliseconds instead of hanging. */
@@ -56,6 +56,30 @@ describe('Live endpoints (WebSocket & SSE)', () => {
     const event = await nextMessage;
 
     expect(event).toEqual({ type: 'deleted', id: created.task.id });
+  });
+
+  it('REST changes arrive as created, updated and deleted events', async () => {
+    const socket = await openSocket();
+    const received = collectEvents(socket, 3);
+    const json = { 'Content-Type': 'application/json' };
+
+    await fetch(`http://${baseUrl}/tasks`, {
+      method: 'POST',
+      headers: json,
+      body: JSON.stringify({ title: 'Walk the dog' }),
+    });
+    await fetch(`http://${baseUrl}/tasks/1`, {
+      method: 'PATCH',
+      headers: json,
+      body: JSON.stringify({ done: true }),
+    });
+    await fetch(`http://${baseUrl}/tasks/1`, { method: 'DELETE' });
+
+    expect((await received).map(describeEvent)).toEqual([
+      'created #1 Walk the dog',
+      'updated #1 done',
+      'deleted #1',
+    ]);
   });
 
   it('a REST POST arrives as a Server-Sent Event', async () => {
@@ -137,6 +161,33 @@ function nextEvent(socket: WebSocket): Promise<TaskEvent> {
     }),
     'WebSocket message',
   );
+}
+
+function collectEvents(socket: WebSocket, count: number): Promise<TaskEvent[]> {
+  const events: TaskEvent[] = [];
+  return withTimeout(
+    new Promise((resolve) => {
+      socket.on('message', (data) => {
+        events.push(JSON.parse(data.toString()));
+        if (events.length === count) resolve(events);
+      });
+    }),
+    `${count} WebSocket messages`,
+  );
+}
+
+/** The compiler checks that every event type is handled – see assertNever. */
+function describeEvent(event: TaskEvent): string {
+  switch (event.type) {
+    case 'created':
+      return `created #${event.task.id} ${event.task.title}`;
+    case 'updated':
+      return `updated #${event.task.id} ${event.task.done ? 'done' : 'open'}`;
+    case 'deleted':
+      return `deleted #${event.id}`;
+    default:
+      return assertNever(event);
+  }
 }
 
 /** Reads a streamed response until `delimiter` shows up (e.g. the end of one SSE message). */

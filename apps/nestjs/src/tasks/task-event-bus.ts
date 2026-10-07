@@ -10,7 +10,7 @@
  */
 import { Injectable, OnModuleDestroy } from '@nestjs/common';
 import { Observable, Subject } from 'rxjs';
-import type { TaskEvent } from './task-event.js';
+import type { TaskEvent } from '@nestjs-demo/data-objects';
 
 @Injectable()
 export class TaskEventBus implements OnModuleDestroy {

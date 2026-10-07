@@ -6,8 +6,7 @@
  * between, so two requests can never interleave inside one operation – no locks
  * needed (Kotlin needs ConcurrentHashMap + AtomicLong for the same guarantee).
  */
-import type { Task } from './task.js';
-import type { UpdateTaskRequest } from './task.dto.js';
+import type { Task, UpdateTaskRequest } from '@nestjs-demo/data-objects';
 import type { TaskRepository } from './task.repository.js';
 
 export class InMemoryTaskRepository implements TaskRepository {

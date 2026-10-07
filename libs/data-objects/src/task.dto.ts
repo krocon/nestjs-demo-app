@@ -3,7 +3,7 @@
  *
  * DTOs are classes, not interfaces, because the decorators of `class-validator`
  * need a runtime value to attach to. The global ValidationPipe
- * (see common/validation.ts) checks them before a controller method runs.
+ * (see apps/nestjs/src/common/validation.ts) checks them before a controller method runs.
  *
  * Good to know: decorators are applied bottom-up, so the rule closest to the
  * property is checked first. With `stopAtFirstError` only that message is reported.

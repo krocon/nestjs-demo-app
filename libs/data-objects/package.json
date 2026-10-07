@@ -1,0 +1,25 @@
+{
+  "name": "@nestjs-demo/data-objects",
+  "version": "1.0.0",
+  "description": "The shared contract: types and DTOs used by the backend and the frontend",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsc -p tsconfig.build.json",
+    "build:watch": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "class-validator": "^0.15.1"
+  }
+}

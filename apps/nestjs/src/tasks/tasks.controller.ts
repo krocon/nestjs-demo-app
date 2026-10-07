@@ -26,9 +26,12 @@ import {
   Res,
 } from '@nestjs/common';
 import type { Response } from 'express';
-import type { Task } from './task.js';
-import { CreateTaskRequest, UpdateTaskRequest } from './task.dto.js';
-import { TaskEvents } from './task-event.js';
+import {
+  CreateTaskRequest,
+  TaskEvents,
+  UpdateTaskRequest,
+  type Task,
+} from '@nestjs-demo/data-objects';
 import { TaskEventBus } from './task-event-bus.js';
 import { TASK_REPOSITORY, type TaskRepository } from './task.repository.js';
 

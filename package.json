@@ -13,11 +13,11 @@
     "node": ">=22.12"
   },
   "scripts": {
-    "build": "npm run build -w apps/nestjs",
+    "build": "npm run build -w libs/data-objects && npm run build -w apps/nestjs",
     "start:dev": "npm run start:dev -w apps/nestjs",
     "start:prod": "npm run start:prod -w apps/nestjs",
-    "test": "npm run test --workspaces --if-present",
-    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run build -w libs/data-objects && npm run test --workspaces --if-present",
+    "typecheck": "npm run build -w libs/data-objects && npm run typecheck --workspaces --if-present",
     "lint": "oxlint libs/ apps/",
     "format": "prettier --write \"{libs,apps}/**/*.ts\"",
     "format:check": "prettier --check \"{libs,apps}/**/*.ts\""

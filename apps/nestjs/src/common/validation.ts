@@ -1,7 +1,7 @@
 /**
  * Request validation with a global ValidationPipe.
  *
- * The pipe maps the JSON body onto its DTO class (see tasks/task.dto.ts),
+ * The pipe maps the JSON body onto its DTO class (see task.dto.ts in @nestjs-demo/data-objects),
  * runs the class-validator rules and rejects the request with 400 if any fail.
  */
 import {
