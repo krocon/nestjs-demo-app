@@ -1,0 +1,97 @@
+### Hello world
+GET http://localhost:8080/
+
+### Health check
+GET http://localhost:8080/health
+
+### List all tasks
+GET http://localhost:8080/tasks
+
+### List only finished tasks
+GET http://localhost:8080/tasks?done=true
+
+### List only open tasks
+GET http://localhost:8080/tasks?done=false
+
+### Get a single task
+GET http://localhost:8080/tasks/1
+
+### Create a task (201 + Location header)
+POST http://localhost:8080/tasks
+Content-Type: application/json
+
+{
+  "title": "Try NestJS"
+}
+
+### Mark a task as done
+PATCH http://localhost:8080/tasks/1
+Content-Type: application/json
+
+{
+  "done": true
+}
+
+### Rename a task
+PATCH http://localhost:8080/tasks/1
+Content-Type: application/json
+
+{
+  "title": "Learn TypeScript properly"
+}
+
+### Delete a task (204)
+DELETE http://localhost:8080/tasks/1
+
+### --- Error cases ----------------------------------------------------------
+
+### Blank title (400)
+POST http://localhost:8080/tasks
+Content-Type: application/json
+
+{
+  "title": "   "
+}
+
+### Title longer than 100 characters (400)
+POST http://localhost:8080/tasks
+Content-Type: application/json
+
+{
+  "title": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+}
+
+### Invalid JSON (400)
+POST http://localhost:8080/tasks
+Content-Type: application/json
+
+{ "title": 
+
+### Invalid done value (400)
+PATCH http://localhost:8080/tasks/2
+Content-Type: application/json
+
+{
+  "done": "yes"
+}
+
+### Invalid done filter (400)
+GET http://localhost:8080/tasks?done=maybe
+
+### Unknown task (404)
+GET http://localhost:8080/tasks/999
+
+### Non-numeric id (400)
+GET http://localhost:8080/tasks/abc
+
+### --- Live ------------------------------------------------------------------
+
+### Live: stream all task events as Server-Sent Events (keep it open, then create/delete tasks)
+GET http://localhost:8080/tasks/events
+Accept: text/event-stream
+
+### Live: WebSocket – IntelliJ opens an interactive console; type a title to create a task
+WEBSOCKET ws://localhost:8080/ws/tasks
+
+### Live: browser demo page
+GET http://localhost:8080/live/
